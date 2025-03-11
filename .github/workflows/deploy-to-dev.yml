@@ -1,0 +1,28 @@
+name: "Terraforming dev"
+
+on:
+  push:
+    branches:
+      - '**'
+jobs:
+  deploy-dev:
+    name: "Terraforming dev"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: Auth to gcp
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.TSM_TERRAFORM_DEV }}
+      - name: terraform init
+        run: terraform init
+        working-directory: terraform/env/dev
+      - name: Plan terraform
+        run: terraform plan
+        working-directory: terraform/env/dev
+      - name: Apply terraform
+        run: terraform apply
+        working-directory: terraform/env/dev
