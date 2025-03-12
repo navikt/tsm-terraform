@@ -20,5 +20,5 @@ provider "google" {
 
 module "common" {
   source = "../../modules/common"
-  bucket-name = "tsm-sykmelding-xml-dev"
+  bucket-name = "tsm-sykmelding-xml-prod"
 }
