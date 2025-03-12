@@ -3,4 +3,7 @@ resource "google_storage_bucket" "sykmelding-xml" {
   name     = var.bucket-name
 
   uniform_bucket_level_access = true
+  labels = {
+    team = "tsm"
+  }
 }
