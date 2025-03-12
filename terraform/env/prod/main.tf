@@ -17,3 +17,8 @@ provider "google" {
   project = var.project
   region  = var.region
 }
+
+module "common" {
+  source = "../../modules/common"
+  bucket-name = "tsm-sykmelding-xml-dev"
+}
