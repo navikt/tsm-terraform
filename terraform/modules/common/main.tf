@@ -13,6 +13,10 @@ resource "google_storage_bucket" "sykmelding-xml" {
   name     = data.google_secret_manager_secret_version.sykmelding-bucket.secret_data
 
   uniform_bucket_level_access = true
+
+  versioning {
+    enabled = true
+  }
   labels = {
     team = "tsm"
   }
