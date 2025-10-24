@@ -1,10 +1,25 @@
+resource "google_project_service" "monitoring" {
+  project            = var.project
+  service            = "monitoring.googleapis.com"
+  disable_on_destroy = false
+}
+resource "google_project_service" "logging" {
+  project            = var.project
+  service            = "logging.googleapis.com"
+  disable_on_destroy = false
+}
+
+
 resource "google_monitoring_notification_channel" "slack_notifikation" {
   display_name = "Log alerts to slack"
   type         = "slack"
+  depends_on = [
+    google_project_service.monitoring
+  ]
   project = var.project
   enabled = true
   labels = {
-    channel_name = "#tsm-alert-spam"
+    channel_name = var.slack_channel
     team = "NAV"
   }
   sensitive_labels {

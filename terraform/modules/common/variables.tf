@@ -11,3 +11,7 @@ variable "slackbot_auth_token" {
 variable "project" {
   type = string
 }
+
+variable "slack_channel" {
+  type = string
+}
