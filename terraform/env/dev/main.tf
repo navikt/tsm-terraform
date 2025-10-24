@@ -19,5 +19,8 @@ provider "google" {
 
 
 module "common" {
-  source = "../../modules/common"
+  source              = "../../modules/common"
+  slackbot_auth_token = var.slackbot_auth_token
+  project = var.project
+  slack_channel = var.slack_channel
 }

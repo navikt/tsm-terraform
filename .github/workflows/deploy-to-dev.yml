@@ -23,6 +23,10 @@ jobs:
       - name: Plan terraform
         run: terraform plan
         working-directory: terraform/env/dev
+        env:
+          TF_VAR_slackbot_auth_token: ${{ secrets.SLACKBOT_AUTH_TOKEN }}
       - name: Apply terraform
         run: terraform apply -auto-approve
         working-directory: terraform/env/dev
+        env:
+          TF_VAR_slackbot_auth_token: ${{ secrets.SLACKBOT_AUTH_TOKEN }}

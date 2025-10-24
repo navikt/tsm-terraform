@@ -9,3 +9,13 @@ variable "region" {
   type        = string
   description = "Region"
 }
+
+variable "slackbot_auth_token" {
+  type      = string
+  sensitive = true
+}
+
+variable "slack_channel" {
+  type = string
+  default = "#tsm-alert-spam"
+}
