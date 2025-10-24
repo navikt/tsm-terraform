@@ -9,3 +9,8 @@ variable "region" {
   type        = string
   description = "Region"
 }
+
+variable "slackbot_auth_token" {
+  type      = string
+  sensitive = true
+}
