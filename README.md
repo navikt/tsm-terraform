@@ -5,6 +5,12 @@ the terraform service account need these permissions
 gcloud services enable serviceusage.googleapis.com --project PROJECT
 ```
 
+``` shell
+gcloud projects add-iam-policy-binding PROJECT\
+  --member="serviceAccount:SA_ACCOUNT_EMAIL"\
+  --role="roles/serviceusage.serviceUsageAdmin"
+```
+
 
 ``` shell
 gcloud projects add-iam-policy-binding PROJECT\
