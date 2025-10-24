@@ -1,6 +1,7 @@
 resource "google_monitoring_notification_channel" "slack_notifikation" {
   display_name = "Log alerts to slack"
   type         = "slack"
+  project = var.project
   enabled = true
   labels = {
     channel_name = "#tsm-alert-spam"
@@ -9,10 +10,12 @@ resource "google_monitoring_notification_channel" "slack_notifikation" {
   sensitive_labels {
     auth_token = var.slackbot_auth_token
   }
+
 }
 
 resource "google_monitoring_alert_policy" "audit_alert_policy" {
   display_name = "Audit log alert"
+  project = var.project
   combiner = "OR"
   depends_on = [
     google_monitoring_notification_channel.slack_notifikation

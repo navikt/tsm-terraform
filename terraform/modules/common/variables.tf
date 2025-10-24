@@ -7,3 +7,7 @@ variable "slackbot_auth_token" {
   type = string
   sensitive = true
 }
+
+variable "project" {
+  type = string
+}
