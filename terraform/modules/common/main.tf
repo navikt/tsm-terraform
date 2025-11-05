@@ -1,20 +1,20 @@
 data "google_secret_manager_secret_version" "sykmelding-bucket" {
-  secret    = "sykmelding-bucket"
-  version   = "latest"
+  secret  = "sykmelding-bucket"
+  version = "latest"
 }
 
 data "google_secret_manager_secret_version" "tsm-sykmelding-bucket-upload-sa" {
-  secret = "tsm-sykmelding-bucket-upload-sa"
+  secret  = "tsm-sykmelding-bucket-upload-sa"
   version = "latest"
 }
 
 data "google_secret_manager_secret_version" "journey-sa" {
-  secret = "journey-sa"
+  secret  = "journey-sa"
   version = "latest"
 }
 
 data "google_secret_manager_secret_version" "syfosmmottak-sa" {
-  secret = "syfosmmottak-sa"
+  secret  = "syfosmmottak-sa"
   version = "latest"
 }
 
@@ -23,7 +23,7 @@ resource "google_storage_bucket" "sykmelding-xml" {
   name     = data.google_secret_manager_secret_version.sykmelding-bucket.secret_data
 
   uniform_bucket_level_access = true
-  public_access_prevention = "enforced"
+  public_access_prevention    = "enforced"
 
   versioning {
     enabled = true
