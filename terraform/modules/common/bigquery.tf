@@ -1,3 +1,9 @@
+resource "google_project_service" "iam" {
+  project            = var.project
+  service            = "iam.googleapis.com"
+  disable_on_destroy = false
+}
+
 resource "random_password" "bigquery_db_password" {
   length  = 16
   special = false
@@ -41,4 +47,26 @@ resource "google_project_iam_member" "cloudsql_regulus_maximus" {
   member  = "serviceAccount:${google_bigquery_connection.regulus_maximus.cloud_sql[0].service_account_id}"
 }
 
-  
+resource "google_service_account" "federated-query" {
+  account_id = "bq-federated-query"
+}
+
+resource "google_project_iam_member" "bq-connection" {
+  project = var.project
+  role    = "roles/bigquery.connectionUser"
+  member  = google_service_account.federated-query.member
+}
+
+
+resource "google_project_iam_member" "bq-job" {
+  project = var.project
+  role    = "roles/bigquery.jobUser"
+  member  = google_service_account.federated-query.member
+}
+
+
+resource "google_project_iam_member" "bq-metadata" {
+  project = var.project
+  role    = "roles/bigquery.metadataViewer"
+  member  = google_service_account.federated-query.member
+}
