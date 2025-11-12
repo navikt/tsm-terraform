@@ -1,10 +1,10 @@
 variable "location" {
   default = "europe-north1"
-  type = string
+  type    = string
 }
 
 variable "slackbot_auth_token" {
-  type = string
+  type      = string
   sensitive = true
 }
 

@@ -20,7 +20,7 @@ resource "google_monitoring_notification_channel" "slack_notifikation" {
   enabled = true
   labels = {
     channel_name = var.slack_channel
-    team = "NAV"
+    team         = "Nav"
   }
   sensitive_labels {
     auth_token = var.slackbot_auth_token
@@ -30,14 +30,14 @@ resource "google_monitoring_notification_channel" "slack_notifikation" {
 
 resource "google_monitoring_alert_policy" "audit_alert_policy" {
   display_name = "Audit log alert"
-  project = var.project
-  combiner = "OR"
+  project      = var.project
+  combiner     = "OR"
   depends_on = [
     google_monitoring_notification_channel.slack_notifikation
   ]
   documentation {
     mime_type = "text/markdown"
-    content = <<-EOT
+    content   = <<-EOT
       **Cloud SQL data access (log-based alert)**
       - User: $${log.extracted_label.user}
       - Database: $${log.extracted_label.database}
@@ -52,8 +52,8 @@ resource "google_monitoring_alert_policy" "audit_alert_policy" {
       resource.type="cloudsql_database"
       EOT
       label_extractors = {
-        user          = "EXTRACT(protoPayload.request.user)"
-        database      = "EXTRACT(protoPayload.request.database)"
+        user     = "EXTRACT(protoPayload.request.user)"
+        database = "EXTRACT(protoPayload.request.database)"
       }
     }
   }

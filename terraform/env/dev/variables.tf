@@ -16,6 +16,6 @@ variable "slackbot_auth_token" {
 }
 
 variable "slack_channel" {
-  type = string
+  type    = string
   default = "#tsm-alert-spam"
 }
