@@ -97,6 +97,7 @@ resource "google_bigquery_data_transfer_config" "query_config" {
 }
 
 data "google_service_account" "tsm_terraform" {
+  depends_on = [google_project_service.iam]
   account_id = "tsm-terraform"
 }
 
