@@ -5,8 +5,8 @@ resource "google_project_service" "iam" {
 }
 
 resource "random_password" "bigquery_db_password" {
-    length = 16
-    special = false
+  length  = 16
+  special = false
 }
 
 resource "google_sql_user" "bigquery_db_user" {
@@ -46,6 +46,7 @@ resource "google_project_iam_member" "cloudsql_regulus_maximus" {
   role    = "roles/cloudsql.client"
   member  = "serviceAccount:${google_bigquery_connection.regulus_maximus.cloud_sql[0].service_account_id}"
 }
+
 
 resource "google_service_account" "federated-query" {
   account_id = "bq-federated-query"
