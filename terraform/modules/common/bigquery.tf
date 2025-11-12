@@ -105,27 +105,3 @@ resource "google_project_iam_member" "tsm_terraform_service_account_user" {
   role    = "roles/iam.serviceAccountUser"
   member  = data.google_service_account.tsm_terraform.member
 }
-
-resource "google_service_account" "federated-query" {
-  account_id = "bq-federated-query"
-}
-
-resource "google_project_iam_member" "bq-connection" {
-  project = var.project
-  role    = "roles/bigquery.connectionUser"
-  member  = google_service_account.federated-query.member
-}
-
-
-resource "google_project_iam_member" "bq-job" {
-  project = var.project
-  role    = "roles/bigquery.jobUser"
-  member  = google_service_account.federated-query.member
-}
-
-
-resource "google_project_iam_member" "bq-metadata" {
-  project = var.project
-  role    = "roles/bigquery.metadataViewer"
-  member  = google_service_account.federated-query.member
-}
