@@ -50,6 +50,7 @@ resource "google_monitoring_alert_policy" "audit_alert_policy" {
       filter = <<-EOT
       logName=~".*cloudaudit.googleapis.com%2Fdata_access"
       resource.type="cloudsql_database"
+      protoPayload.request.@type=~".*PgAuditEntry"
       EOT
       label_extractors = {
         user     = "EXTRACT(protoPayload.request.user)"
