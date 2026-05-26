@@ -80,7 +80,7 @@ resource "google_bigquery_dataset_iam_member" "federated_query_dataset_access" {
 }
 
 resource "google_bigquery_data_transfer_config" "query_config" {
-  depends_on             = [google_bigquery_dataset_iam_member.federated_query_dataset_access, google_bigquery_dataset.tsm_dataset, google_bigquery_connection.regulus_maximus, google_bigquery_table.regulus_maximus, google_project_iam_member.tsm_terraform_service_account_user]
+  depends_on             = [google_bigquery_dataset_iam_member.federated_query_dataset_access, google_bigquery_dataset.tsm_dataset, google_bigquery_connection.regulus_maximus, google_bigquery_table.regulus_maximus]
   display_name           = "regulus-maximus"
   location               = var.location
   data_source_id         = "scheduled_query"
@@ -94,15 +94,4 @@ resource "google_bigquery_data_transfer_config" "query_config" {
     SELECT * FROM EXTERNAL_QUERY("${var.project}.${var.location}.${google_bigquery_connection.regulus_maximus.connection_id}", "SELECT * FROM sykmelding;");
     SQL
   }
-}
-
-data "google_service_account" "tsm_terraform" {
-  depends_on = [google_project_service.iam]
-  account_id = "tsm-terraform"
-}
-
-resource "google_project_iam_member" "tsm_terraform_service_account_user" {
-  project = var.project
-  role    = "roles/iam.serviceAccountUser"
-  member  = data.google_service_account.tsm_terraform.member
 }
