@@ -58,26 +58,30 @@ resource "google_storage_bucket" "ocr-bucket" {
   }
 }
 
-resource "google_storage_bucket_iam_member" "sykmelding-upload-member" {
-  bucket = google_storage_bucket.sykmelding-xml.name
-  role   = "roles/storage.objectAdmin"
-  member = "serviceAccount:${data.google_secret_manager_secret_version.tsm-sykmelding-bucket-upload-sa.secret_data}"
+data "google_iam_policy" "sykmelding-xml-policy" {
+  binding {
+    role = "roles/storage.objectAdmin"
+    members = [
+      "serviceAccount:${data.google_secret_manager_secret_version.tsm-sykmelding-bucket-upload-sa.secret_data}",
+      "serviceAccount:${data.google_secret_manager_secret_version.journey-sa.secret_data}",
+      "serviceAccount:${data.google_secret_manager_secret_version.syfosmmottak-sa.secret_data}",
+    ]
+  }
 }
 
-resource "google_storage_bucket_iam_member" "journey-upload-member" {
-  bucket = google_storage_bucket.sykmelding-xml.name
-  role   = "roles/storage.objectAdmin"
-  member = "serviceAccount:${data.google_secret_manager_secret_version.journey-sa.secret_data}"
+resource "google_storage_bucket_iam_policy" "sykmelding-xml-bucket-policy" {
+  bucket      = google_storage_bucket.sykmelding-xml.name
+  policy_data = data.google_iam_policy.sykmelding-xml-policy.policy_data
 }
 
-resource "google_storage_bucket_iam_member" "syfosmmottak-member" {
-  bucket = google_storage_bucket.sykmelding-xml.name
-  role   = "roles/storage.objectAdmin"
-  member = "serviceAccount:${data.google_secret_manager_secret_version.syfosmmottak-sa.secret_data}"
+data "google_iam_policy" "ocr-bucket-policy" {
+  binding {
+    role    = "roles/storage.objectAdmin"
+    members = ["serviceAccount:${data.google_secret_manager_secret_version.syfosmpapirmottak-sa.secret_data}"]
+  }
 }
 
-resource "google_storage_bucket_iam_member" "papirsykmelding-member" {
-  bucket = google_storage_bucket.ocr-bucket.name
-  role   = "roles/storage.objectAdmin"
-  member = "serviceAccount:${data.google_secret_manager_secret_version.syfosmpapirmottak-sa.secret_data}"
+resource "google_storage_bucket_iam_policy" "ocr-bucket-policy" {
+  bucket      = google_storage_bucket.ocr-bucket.name
+  policy_data = data.google_iam_policy.ocr-bucket-policy.policy_data
 }
