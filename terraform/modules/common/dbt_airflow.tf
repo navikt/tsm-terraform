@@ -15,31 +15,31 @@ resource "google_bigquery_dataset_iam_member" "dbt_airflow_tsm_dataset_access" {
 }
 
 resource "google_bigquery_dataset_iam_member" "dbt_airflow_staging_access" {
-  dataset_id = "dbt_staging"
+  dataset_id = google_bigquery_dataset.dbt_staging.dataset_id
   role       = "roles/bigquery.dataEditor"
   member     = google_service_account.dbt_airflow.member
 }
 
 resource "google_bigquery_dataset_iam_member" "dbt_airflow_marts_access" {
-  dataset_id = "dbt_marts"
+  dataset_id = google_bigquery_dataset.dbt_marts.dataset_id
   role       = "roles/bigquery.dataEditor"
   member     = google_service_account.dbt_airflow.member
 }
 
 resource "google_bigquery_dataset_iam_member" "dbt_airflow_intermediate_access" {
-  dataset_id = "dbt_intermediate"
+  dataset_id = google_bigquery_dataset.dbt_intermediate.dataset_id
   role       = "roles/bigquery.dataEditor"
   member     = google_service_account.dbt_airflow.member
 }
 
 resource "google_bigquery_dataset_iam_member" "dbt_airflow_exposed_access" {
-  dataset_id = "dbt_exposed"
+  dataset_id = google_bigquery_dataset.dbt_exposed.dataset_id
   role       = "roles/bigquery.dataEditor"
   member     = google_service_account.dbt_airflow.member
 }
 
 resource "google_bigquery_dataset_iam_member" "dbt_airflow_access_controlled_access" {
-  dataset_id = "dbt_access_controlled"
+  dataset_id = google_bigquery_dataset.dbt_access_controlled.dataset_id
   role       = "roles/bigquery.dataEditor"
   member     = google_service_account.dbt_airflow.member
 }
@@ -47,5 +47,5 @@ resource "google_bigquery_dataset_iam_member" "dbt_airflow_access_controlled_acc
 resource "google_service_account_iam_member" "dbt_airflow_token_creator" {
   service_account_id = google_service_account.dbt_airflow.name
   role               = "roles/iam.serviceAccountTokenCreator"
-  member             = "serviceAccount:team-symfoni-cfe8@knada-gcp.iam.gserviceaccount.com"
+  member             = "serviceAccount:${var.airflow_sa}"
 }
