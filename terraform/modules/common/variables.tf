@@ -15,3 +15,8 @@ variable "project" {
 variable "slack_channel" {
   type = string
 }
+
+variable "airflow_sa" {
+  type        = string
+  description = "Email of the Airflow service account allowed to impersonate the dbt-airflow service account"
+}
