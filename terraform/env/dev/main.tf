@@ -23,4 +23,5 @@ module "common" {
   slackbot_auth_token = var.slackbot_auth_token
   project             = var.project
   slack_channel       = var.slack_channel
+  airflow_sa          = var.airflow_sa
 }

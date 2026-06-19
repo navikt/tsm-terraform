@@ -19,3 +19,8 @@ variable "slack_channel" {
   type    = string
   default = "#tsm-audit-log"
 }
+
+variable "airflow_sa" {
+  type    = string
+  default = "team-symfoni-cfe8@knada-gcp.iam.gserviceaccount.com"
+}
