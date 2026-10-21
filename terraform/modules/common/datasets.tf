@@ -24,13 +24,6 @@ resource "google_bigquery_dataset" "dbt_marts" {
   project       = var.project
 }
 
-resource "google_bigquery_dataset" "dbt_intermediate" {
-  dataset_id    = "dbt_intermediate"
-  friendly_name = "dbt intermediate"
-  location      = var.location
-  project       = var.project
-}
-
 resource "google_bigquery_dataset" "dbt_exposed" {
   dataset_id    = "dbt_exposed"
   friendly_name = "dbt exposed"
